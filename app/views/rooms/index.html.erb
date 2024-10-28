@@ -1,0 +1,39 @@
+<div class="row pl-2 max-w-full ">
+  <div class="col-md-2 ">
+    <h5 class="text-green-800  text-lg"> Hi <%= @current_user.username %> </h5>
+  <%= button_to 'Sign Out', signout_path,  :method => :delete, class:"text-white border rounded p-[2px] bg-red-500" %>
+  <div class="border mt-2 mb-2 rounded shadow-lg">
+    <h4 class="bg-purple-500 mr-0 rounded text-white pl-4 p-[2px]"> Users </h4>
+    <div class="bg-blue-500 rounded mb-5 w-[80%] mx-auto">
+      <%= turbo_stream_from "users" %>
+      <div id="users">
+        <%= render @users %>
+      </div>
+    </div>
+    </div>
+    <div class=" rounded border shadow ">
+    <h4 class="bg-purple-500 mr-0 rounded text-white pl-4 p-[2px] mb-2"> Rooms </h4>
+    <%= render partial: "layouts/new_room_form" %>
+      <%= turbo_stream_from "rooms" %>
+      <div id="rooms" class=" mt-3">
+        <%= render @rooms %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-10 pr-0 ">
+       <div>
+     <div class=" text-light">
+    <% if @single_room %>
+  <h4 class="text-center fixed ml-[40%]"> <%= @user&.username || @single_room.name %> </h4>
+        <%= turbo_stream_from @single_room %>
+            <div id="messages">
+                <%= render @messages %>
+
+            </div>
+            <%= render partial: 'layouts/new_message_form' %>
+    <% end %>
+    </div>
+    </div> 
+  </div>
+</div>
